@@ -27,13 +27,16 @@ export const jwtParse = async (
 
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return res.sendStatus(401);
+    
   }
 
   // Bearer lshdflshdjkhvjkshdjkvh34h5k3h54jkh
   const token = authorization.split(" ")[1];
+  console.log("Token:", token);
 
   try {
     const decoded = jwt.decode(token) as jwt.JwtPayload;
+    console.log("Decoded:", decoded);
     const auth0Id = decoded.sub;
 
     const user = await User.findOne({ auth0Id });
