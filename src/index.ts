@@ -42,6 +42,6 @@ app.use("/api/my/restaurant", myRestaurantRoute);
 app.use("/api/restaurant", restaurantRoute);
 app.use("/api/order", orderRoute);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`Server started on ${process.env.PORT}`);
 });
