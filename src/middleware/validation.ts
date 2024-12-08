@@ -13,6 +13,14 @@ const handleValidationErrors = async (
   next();
 };
 
+// Middleware to check admin rights
+const checkIsAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.isAdmin) {
+    return res.status(403).json({ error: "Admin access required" });
+  }
+  next();
+};
+
 export const validateMyUserRequest = [
   body("name").isString().notEmpty().withMessage("Name must be a string"),
   body("addressLine1")
@@ -25,6 +33,7 @@ export const validateMyUserRequest = [
 ];
 
 export const validateMyRestaurantRequest = [
+  checkIsAdmin,
   body("restaurantName").notEmpty().withMessage("Restaurant name is required"),
   body("city").notEmpty().withMessage("City is required"),
   body("country").notEmpty().withMessage("Country is required"),
